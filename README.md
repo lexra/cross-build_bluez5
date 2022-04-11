@@ -4,7 +4,7 @@ A bash shell script is provded for the prebuilt toolchain of `gcc-sigmastar-9.1.
 
 ### Bluez5 dependencies
 
-zlib
+#### zlib
 
 ```bash
 function build_zlib() {
@@ -30,7 +30,7 @@ function build_zlib() {
 }
 ```
 
-libffi
+#### libffi
 
 ```bash
 function build_libffi() {
@@ -56,7 +56,7 @@ function build_libffi() {
 }
 ```
 
-glib
+#### glib
 
 ```bash
 function build_glib() {
@@ -87,7 +87,7 @@ function build_glib() {
 	return 0;
 }
 ```
-expat
+#### expat
 
 ```bash
 function build_expat() {
@@ -113,7 +113,7 @@ function build_expat() {
 }
 ```
 
-dbus
+#### dbus
 
 ```bash
 function build_dbus() {
@@ -141,7 +141,7 @@ function build_dbus() {
 }
 ```
 
-libical
+#### libical
 
 ```bash
 function build_libical() {
@@ -168,7 +168,7 @@ function build_libical() {
 }
 ```
 
-ncurses
+#### ncurses
 
 ```bash
 function build_ncurses() {
@@ -193,6 +193,11 @@ function build_ncurses() {
 	cd -
 	return 0;
 }
+```
+
+#### readline
+
+```bash
 function build_readline() {
 	cd $WORK
 	git clone https://git.savannah.gnu.org/git/readline.git || true
@@ -213,28 +218,4 @@ function build_readline() {
 	cd -
 	return 0;
 }
-function build_bluez() {
-	cd $WORK
-	[ ! -e bluez-5.25.tar.xz ] && wget http://www.kernel.org/pub/linux/bluetooth/bluez-5.25.tar.xz -O bluez-5.25.tar.xz
-	[ ! -d bluez-5.25 ] && tar Jxvf bluez-5.25.tar.xz
-	cd bluez-5.25
-	unset DESTDIR
-	if [ 0 -eq $# ]; then
-		./configure --host=arm-linux-gnueabihf --prefix=${SYSROOT}/usr --with-sysroot=${SYSROOT} --enable-shared=yes \
-			--disable-systemd --disable-udev --disable-cups --disable-obex --enable-library --enable-threads --enable-android=no
-		make -j8
-		make uninstall || true
-		make install
-		cd -
-		return 0;
-	fi
-	./configure --host=arm-linux-gnueabihf --prefix=/usr --with-sysroot=${SYSROOT} --enable-shared=yes \
-		--disable-systemd --disable-udev --disable-cups --disable-obex --enable-library --enable-threads --enable-android=no
-	make -j8
-	DESTDIR="$1" make uninstall || true
-	DESTDIR="$1" make install
-	cd -
-	return 0;
-}
-
 ```
