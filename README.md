@@ -4,7 +4,7 @@ A bash shell script is provded for the prebuilt toolchain of `gcc-sigmastar-9.1.
 
 ### Bluez5 dependencies
 
-#### Zlib
+zlib
 
 ```bash
 function build_zlib() {
